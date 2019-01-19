@@ -121,7 +121,7 @@ private:
     {
         c = ((c == ' ') ? ' ' : '*');
     }
-    static constexpr uint8_t X = 64;
-    static constexpr uint8_t Y = 32;
+    static constexpr uint8_t X = 32;
+    static constexpr uint8_t Y = 64;
     char m_screen[Screen::X][Screen::Y];
 };
