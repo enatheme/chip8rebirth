@@ -114,8 +114,25 @@ public:
 
 private:
     bool m_diagram_animated = false;
+    bool m_print_instruction = true;
     Processor<PROCESSOR> & m_processor;
+};
 
+template <class PROCESSOR>
+class Registers: public Display
+{
+public:
+    Registers(Processor<PROCESSOR> & proc) : Display("Registers", true), m_processor(proc)
+    {}
+
+    void update() override final;
+
+    void clear() override final
+    {}
+
+private:
+    Processor<PROCESSOR> & m_processor;
+    bool m_print_in_terminal = false;
 };
 
 #include "Display.impl"
