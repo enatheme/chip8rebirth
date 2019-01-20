@@ -135,4 +135,21 @@ private:
     bool m_print_in_terminal = false;
 };
 
+template <class PROCESSOR>
+class Memory: public Display
+{
+public:
+    Memory(Processor<PROCESSOR> & proc) : Display("Memory", true), m_processor(proc)
+    {}
+
+    void update() override final;
+
+    void clear() override final
+    {}
+
+private:
+    Processor<PROCESSOR> & m_processor;
+    bool m_print_in_terminal = false;
+};
+
 #include "Display.impl"

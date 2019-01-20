@@ -44,3 +44,23 @@ void Registers<PROCESSOR>::update()
     m_processor.display_register(f);
     ImGui::End();
 }
+
+template <class PROCESSOR>
+void Memory<PROCESSOR>::update()
+{
+    ImGui::Begin(m_title);
+    ImGui::Checkbox("Print memory in terminal", &m_print_in_terminal);
+    auto f = [in_terminal = m_print_in_terminal](const char * text, size_t size)
+    {
+        if (!in_terminal)
+        {
+            ImGui::TextUnformatted(text, text + size);
+        }
+        else
+        {
+            std::cout << text << std::endl;
+        }
+    };
+    m_processor.display_memory(f);
+    ImGui::End();
+}
