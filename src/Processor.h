@@ -107,6 +107,16 @@ public:
         do_display_register(f);
     }
 
+    void display_current_instruction(std::function<void(const char *, size_t)> f)
+    {
+        do_display_current_instruction(f);
+    }
+
+    void next_instruction()
+    {
+        do_next_instruction();
+    }
+
 private:
     template <typename DISPLAY_FUNC>
     void do_display_memory(DISPLAY_FUNC render)
@@ -135,8 +145,12 @@ private:
         }
     }
 
+    template <typename DISPLAY_FUNC>
+    void do_display_current_instruction(DISPLAY_FUNC render) const;
+
     void dispatch();
-    void next_instruction();
+
+    void do_next_instruction();
 private:
     std::array<uint8_t, MemorySize> m_memory;
     std::array<uint8_t, RegistersSize> m_registers;
@@ -152,3 +166,5 @@ private:
     uint8_t m_dbyte1 = 0;
     uint8_t m_dbyte2 = 0;
 };
+
+#include "Processor.impl"
