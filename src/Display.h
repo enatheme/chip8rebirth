@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Processor.h"
+
 #include "../external/imgui/lib/imgui.h"
 #include "../external/imgui/lib/imgui-SFML.h"
 
@@ -79,38 +81,11 @@ public:
         std::memset(m_screen, '*', Screen::X * Screen::Y);
     }
 
-    void update() override final
-    {
-        ImGui::Begin(m_title);
-        for (uint8_t i = 0 ; i < Screen::X ; ++i)
-        {
-            ImGui::TextUnformatted(m_screen[i], m_screen[i] + Screen::Y);
-        }
-        ImGui::End();
-    }
+    void update() override final;
 
-    void clear() override final
-    {
-        std::memset(m_screen, '*', Screen::X * Screen::Y);
-    }
+    void clear() override final;
 
-    void draw(uint8_t sprite, uint8_t x, uint8_t y)
-    {
-        for (uint8_t iter_x = 0, end_x = std::min(uint8_t(x + 5), uint8_t(Screen::X - 1)) ; x + iter_x < end_x ; ++iter_x)
-        {
-            for (uint8_t iter_y = 0, end_y = std::min(uint8_t(y + 4), uint8_t(Screen::Y - 1)) ; y + iter_y < end_y ; ++iter_y)
-            {
-                if (Sprites()[sprite][iter_x][iter_y])
-                {
-                    flip(m_screen[x + iter_x][y + iter_y]);
-                }
-                else
-                {
-                    xor_flip(m_screen[x + iter_x][y + iter_y]);
-                }
-            }
-        }
-    }
+    void draw(uint8_t sprite, uint8_t x, uint8_t y);
 
 private:
     constexpr void flip(char & c)
@@ -125,3 +100,22 @@ private:
     static constexpr uint8_t Y = 64;
     char m_screen[Screen::X][Screen::Y];
 };
+
+template <class PROCESSOR>
+class Options: public Display
+{
+public:
+    Options(Processor<PROCESSOR> & proc) : Display("Options", true), m_processor(proc)
+    {}
+
+    void update() override final;
+
+    void clear() override final;
+
+private:
+    bool m_diagram_animated = false;
+    Processor<PROCESSOR> & m_processor;
+
+};
+
+#include "Display.impl"

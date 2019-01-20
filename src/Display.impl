@@ -1,0 +1,27 @@
+template <class PROCESSOR>
+void Options<PROCESSOR>::update()
+{
+    static bool print_instruction;
+    ImGui::Begin(m_title);
+    if (ImGui::Button("Next instruction"))
+    {
+        m_processor.next_instruction();
+    }
+    ImGui::SameLine(150);
+    ImGui::Checkbox("Print instruction", &print_instruction);
+    if (print_instruction)
+    {
+        auto f = [](const char * text, size_t size)
+        {
+            ImGui::TextUnformatted(text, text + size);
+            //std::cout << text << std::endl;
+        };
+        m_processor.display_current_instruction(f);
+    }
+    ImGui::End();
+}
+
+template <class PROCESSOR>
+void Options<PROCESSOR>::clear()
+{
+}
