@@ -152,4 +152,21 @@ private:
     bool m_print_in_terminal = false;
 };
 
+template <class PROCESSOR>
+class Debug: public Display
+{
+public:
+    Debug(Processor<PROCESSOR> & proc, Screen & screen) : Display("Debug tool", true), m_processor(proc), m_screen(screen)
+    {}
+
+    void update() override final;
+
+    void clear() override final
+    {}
+
+private:
+    Processor<PROCESSOR> & m_processor;
+    Screen & m_screen;
+};
+
 #include "Display.impl"

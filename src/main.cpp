@@ -10,13 +10,13 @@ int main()
  
     sf::Clock deltaClock;
 
+
     Screen screen;
-    screen.draw(2, 2, 2);
-    screen.draw(8, 10, 10);
     Processor p("etc/BLITZ", screen);
     Options<Screen> options(p);
     Registers<Screen> registers(p);
     Memory<Screen> memory(p);
+    Debug<Screen> debug(p, screen);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -37,6 +37,7 @@ int main()
         options.update();
         registers.update();
         memory.update();
+        debug.update();
 
         window.clear();
         ImGui::Render();

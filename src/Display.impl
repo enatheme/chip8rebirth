@@ -64,3 +64,20 @@ void Memory<PROCESSOR>::update()
     m_processor.display_memory(f);
     ImGui::End();
 }
+
+template <class PROCESSOR>
+void Debug<PROCESSOR>::update()
+{
+    ImGui::Begin(m_title);
+    static int number;
+    static int column;
+    static int line;
+    ImGui::InputInt("number (0 to 16)", &number);
+    ImGui::InputInt("column", &column);
+    ImGui::InputInt("line", &line);
+    if (ImGui::Button("Draw it"))
+    {
+        m_screen.draw(number, line, column);
+    }
+    ImGui::End();
+}
