@@ -57,7 +57,7 @@ constexpr std::string_view register_title[] = {"v0", "v1", "v2", "v3", "v4", "v5
      * |    | x  | y  | n  |
      * |____|____|____|____|
      * |a char   |a char   |
-     * |____|____|____|____|
+     * |_________|_________|
      * |4bit|4bit|4bit|4bit|
      * |____|____|____|____|
      * |0101|1101|0110|1100|
@@ -85,6 +85,7 @@ public:
         }
 
         m_registers = {0};
+        m_ip = 0x200;
     }
 
     Processor(const Processor &) = delete;
@@ -161,6 +162,7 @@ private:
     short m_ip = 0;
     short m_sp = 0;
     short m_bp = 0;
+    bool m_vf = 0;
     
     // current instruction
     uint8_t m_dbyte1 = 0;
