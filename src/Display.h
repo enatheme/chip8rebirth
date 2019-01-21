@@ -15,7 +15,7 @@
 
 struct Sprites
 {
-    using Sprite = bool[4][5];
+    using Sprite = bool[5][4];
     constexpr void generate(std::array<uint8_t, 5> input, Sprite & sprite)
     {
         for (uint8_t line = 0 ; line < 5 ; ++line)
