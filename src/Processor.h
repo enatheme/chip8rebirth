@@ -118,6 +118,10 @@ public:
         do_next_instruction();
     }
 
+    void execute_current_instruction()
+    {
+        dispatch();
+    }
 private:
     template <typename DISPLAY_FUNC>
     void do_display_memory(DISPLAY_FUNC render)
