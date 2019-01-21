@@ -78,7 +78,7 @@ public:
         }
 
         int c; // note: int, not char, required to handle EOF
-        unsigned int a = 0;
+        unsigned int a = 0x200;
         while ((c = std::fgetc(fp)) != EOF) { // standard C I/O file reading loop
              m_memory[a] = c;
              a++;
