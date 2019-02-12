@@ -36,13 +36,13 @@ constexpr size_t MemorySize = 4096;
 constexpr size_t RegistersSize = 16;
 constexpr std::string_view register_title[] = {"v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "va", "vb", "vc", "vd", "ve", "vf"};
 
-    /*  
+    /*
      * 12 bits : nnn or addr
      * 4 bits : n or nibble
      * 4 bits : x
      * 4 bits : y
      * a byte : kk or byte
-     * 
+     *
      *  ___________________
      * |0xf0|0x0f|0xf0|0x0f|
      * |____|____|____|____|
@@ -60,7 +60,7 @@ constexpr std::string_view register_title[] = {"v0", "v1", "v2", "v3", "v4", "v5
      * |____|____|____|____|
      * |0101|1101|0110|1100|
      * |____|____|____|____|
-     * 
+     *
      */
 
 template <class DISPLAY_TYPE>
@@ -96,13 +96,13 @@ public:
         m_memory = std::move(p.m_memory);
         m_registers = std::move(p.m_registers);
         m_display = p.m_display;
-        
+
         m_register_I = p.m_register_I;
         m_ip = p.m_ip;
         m_sp = p.m_sp;
         m_bp = p.m_bp;
         m_vf = p.m_vf;
-        
+
         m_dbyte1 = p.m_dbyte1;
         m_dbyte2 = p.m_dbyte2;
     }
@@ -188,7 +188,7 @@ private:
     short m_sp = 0;
     short m_bp = 0;
     bool m_vf = 0;
-    
+
     // current instruction
     uint8_t m_dbyte1 = 0;
     uint8_t m_dbyte2 = 0;
