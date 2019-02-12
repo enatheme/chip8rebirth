@@ -32,3 +32,18 @@ void Screen::draw(uint8_t sprite, uint8_t x, uint8_t y)
         }
     }
 }
+
+Screen::Screen(const Screen & s) : Display("Screen", true)
+{
+    std::memcpy(m_screen, s.m_screen, sizeof(char) * Screen::X * Screen::Y);
+}
+
+void Screen::operator=(const Screen & s)
+{
+    std::memcpy(m_screen, s.m_screen, sizeof(char) * Screen::X * Screen::Y);
+}
+
+void Screen::operator=(Screen && s)
+{
+    std::memcpy(m_screen, s.m_screen, sizeof(char) * Screen::X * Screen::Y);
+}

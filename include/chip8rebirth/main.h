@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Processor.h"
+#include "Chip8.h"
 #include "Display.h"
+#include "Processor.h"
 
-#include "../external/imgui/lib/imgui.h"
-#include "../external/imgui/lib/imgui-SFML.h"
+#include "imgui/lib/imgui.h"
+#include "imgui/lib/imgui-SFML.h"
 
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"

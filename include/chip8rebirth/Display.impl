@@ -1,4 +1,13 @@
 template <class PROCESSOR>
+void Options<PROCESSOR>::operator=(Options && o)
+{
+    m_diagram_animated = o.m_diagram_animated;
+    m_print_instruction = o.m_print_instruction;
+    m_process_in_run = o.m_process_in_run;
+    m_processor = std::move(m_processor);
+}
+
+template <class PROCESSOR>
 void Options<PROCESSOR>::update()
 {
     ImGui::Begin(m_title);
@@ -12,12 +21,24 @@ void Options<PROCESSOR>::update()
         };
         m_processor.display_current_instruction(f);
     }
+    ImGui::Checkbox("In pause", &m_process_in_run);
+    if (m_process_in_run)
+    {
+        m_processor.run();
+    }
     ImGui::End();
 }
 
 template <class PROCESSOR>
 void Options<PROCESSOR>::clear()
 {
+}
+
+template <class PROCESSOR>
+void Registers<PROCESSOR>::operator=(Registers && r)
+{
+    m_processor = std::move(r.m_processor);
+    m_print_in_terminal = r.m_print_in_terminal;
 }
 
 template <class PROCESSOR>
@@ -41,6 +62,13 @@ void Registers<PROCESSOR>::update()
 }
 
 template <class PROCESSOR>
+void Memory<PROCESSOR>::operator=(Memory && m)
+{
+    m_processor = std::move(m.m_processor);
+    m_print_in_terminal = m.m_print_in_terminal;
+}
+
+template <class PROCESSOR>
 void Memory<PROCESSOR>::update()
 {
     ImGui::Begin(m_title);
@@ -58,6 +86,13 @@ void Memory<PROCESSOR>::update()
     };
     m_processor.display_memory(f);
     ImGui::End();
+}
+
+template <class PROCESSOR>
+void Debug<PROCESSOR>::operator=(Debug && d)
+{
+    m_processor = std::move(d.m_processor);
+    m_screen = std::move(d.m_screen);
 }
 
 template <class PROCESSOR>

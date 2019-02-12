@@ -11,8 +11,6 @@
 #include <cstdlib>
 
 
-#include <iostream>
-
 struct HexToString
 {
     static constexpr char hexmap[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
@@ -69,6 +67,7 @@ template <class DISPLAY_TYPE>
 class Processor
 {
 public:
+    Processor() = default;
     Processor(const std::string & rom_path, DISPLAY_TYPE display) : m_display(display)
     {
         FILE* fp = std::fopen(rom_path.c_str(), "r");
@@ -92,6 +91,22 @@ public:
     Processor(const Processor &&) = delete;
     ~Processor() = default;
 
+    void operator=(Processor && p)
+    {
+        m_memory = std::move(p.m_memory);
+        m_registers = std::move(p.m_registers);
+        m_display = p.m_display;
+        
+        m_register_I = p.m_register_I;
+        m_ip = p.m_ip;
+        m_sp = p.m_sp;
+        m_bp = p.m_bp;
+        m_vf = p.m_vf;
+        
+        m_dbyte1 = p.m_dbyte1;
+        m_dbyte2 = p.m_dbyte2;
+    }
+
     void display(std::function<void(const char *, size_t)> f)
     {
         do_display_memory(f);
@@ -111,6 +126,12 @@ public:
     void display_current_instruction(std::function<void(const char *, size_t)> f)
     {
         do_display_current_instruction(f);
+    }
+
+    void run()
+    {
+        do_next_instruction();
+        dispatch();
     }
 
     void next_instruction()

@@ -2,8 +2,8 @@
 
 #include "Processor.h"
 
-#include "../external/imgui/lib/imgui.h"
-#include "../external/imgui/lib/imgui-SFML.h"
+#include "imgui/lib/imgui.h"
+#include "imgui/lib/imgui-SFML.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <cstring>
 #include <iostream>
+#include <memory>
 
 struct Sprites
 {
@@ -78,14 +79,18 @@ class Screen: public Display
 public:
     Screen() : Display("Screen", true)
     {
-        std::memset(m_screen, '*', Screen::X * Screen::Y);
+        std::memset(m_screen, ' ', Screen::X * Screen::Y);
     }
+    Screen(const Screen & s);
 
     void update() override final;
 
     void clear() override final;
 
     void draw(uint8_t sprite, uint8_t x, uint8_t y);
+
+    void operator=(const Screen & s);
+    void operator=(Screen && s);
 
 private:
     constexpr void flip(char & c)
@@ -112,9 +117,12 @@ public:
 
     void clear() override final;
 
+    void operator=(Options && o);
+
 private:
     bool m_diagram_animated = false;
     bool m_print_instruction = true;
+    bool m_process_in_run = false;
     Processor<PROCESSOR> & m_processor;
 };
 
@@ -129,6 +137,8 @@ public:
 
     void clear() override final
     {}
+
+    void operator=(Registers && r);
 
 private:
     Processor<PROCESSOR> & m_processor;
@@ -147,6 +157,8 @@ public:
     void clear() override final
     {}
 
+    void operator=(Memory && m);
+
 private:
     Processor<PROCESSOR> & m_processor;
     bool m_print_in_terminal = false;
@@ -163,6 +175,8 @@ public:
 
     void clear() override final
     {}
+
+    void operator=(Debug && d);
 
 private:
     Processor<PROCESSOR> & m_processor;
