@@ -36,3 +36,6 @@ CMakeFiles
 cmake_install.cmake
 CMakeCache.txt
 MakeFile
+
+# bear output for YCM
+compile_commands.json
